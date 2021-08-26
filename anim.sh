@@ -4,7 +4,7 @@
 # Desc     - Stream anime locally
 # Author   - Sean Reyboz <seanreyboz@tuta.io>
 # Created  - 2021-08-18
-# Modified - 2021-08-26 - 15:44:48 CEST
+# Modified - 2021-08-26 - 21:32:13 CEST
 #------------------------------------------------------------------------------
 #                              --- DISCLAIMER ---
 #             THIS PROGRAM WAS CREATED FOR LEARNING PURPOSES ONLY,
@@ -147,7 +147,7 @@ animeSelection() {
 	count=0
 
 	# Prompt the user to select an anime
-	printf "\n%s\n$prompt" "Select the anime's ID you want to watch"
+	printf "\n%s\n$prompt" "Select the ID of the anime you want to watch"
 	read -r input
 
 	# Verify that input is a number
