@@ -4,7 +4,7 @@
 # Desc     - Stream anime locally
 # Author   - Sean Reyboz <seanreyboz@tuta.io>
 # Created  - 2021-08-18
-# Modified - 2021-08-22 - 12:39:38 CEST
+# Modified - 2021-08-26 - 15:44:48 CEST
 #------------------------------------------------------------------------------
 #                              --- DISCLAIMER ---
 #             THIS PROGRAM WAS CREATED FOR LEARNING PURPOSES ONLY,
@@ -28,14 +28,12 @@
 #     As the script will be unable to find suitable links, it will throw an
 #     error and prompt the user to choose another episode or try again later.
 #
-# TODO: Remove the '-s' flag for more convenience. Also take '$*' as the anime
-#       name to consider.
 # TODO: Find another server to retrieve the videos from in order to improve
 #       reliability and stability.
 #
 
 prog=${0##*/}
-ver="2021-08-22"
+ver="2021-08-26"
 
 # player MUST be able to play urls. Default: mpv
 player="mpv"
@@ -174,10 +172,10 @@ animeSelection() {
 	debug 'Selected anime is' "$selectedAnime"
 }
 
-# getEpsisodes()
+# getEpisodes()
 # Get the maximum number of episodes available for the selected anime, and
 # prompt the user to choose one to watch, before calling `getLink`
-getEpsisodes() {
+getEpisodes() {
 	url="https://gogoanime.vc/category/$selectedAnime"
 
 	# Get the maximum number of episodes for the selected anime
@@ -195,6 +193,8 @@ getEpsisodes() {
 	if [ "$choosedEp" -gt "$episodes" ] || [ "$choosedEp" -le 0 ]; then
 		err "Invalid episode number (out of range)." 2
 	fi
+
+	getLink
 }
 
 # getLink()
@@ -209,7 +209,7 @@ getLink() {
 				choosedEp=$((choosedEp + 1))
 				;;
 		esac
-		printf '%s %d...\n' "Getting video link for episode" "$choosedEp"
+		printf '%bGetting video link for episode %d...\n' "$notify" "$choosedEp"
 	fi
 
 	url="https://gogoanime.vc/$selectedAnime-episode-$choosedEp"
@@ -237,10 +237,15 @@ playAnime() {
 	debug "Video link" "$video"
 
 	if $player "$video" >/dev/null 2>&1; then
-		postEpisode
+		# exit once the last episode has been watched.
+		if [ "$choosedEp" -eq "$episodes" ]; then
+			exit 0
+		else
+			postEpisode
+		fi
 	else
 		err "Unable to play this episode. Try again later, or try another episode." 0
-		getEpsisodes
+		getEpisodes
 	fi
 }
 
@@ -297,8 +302,7 @@ urlEncodeSpaces() {
 main() {
 	searchAnime "$1"
 	animeSelection
-	getEpsisodes
-	getLink
+	getEpisodes
 }
 
 ## HANDLE ARGUMENTS

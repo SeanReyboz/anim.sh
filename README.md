@@ -2,7 +2,7 @@
 # Anim.sh &ndash; Stream Anime Locally.
 
 
-[](./preview/)
+![anim.sh preview](./preview/preview.gif)
 
 
 ### Table of Contents
@@ -25,7 +25,7 @@ locally on *mpv*(1), or any other player that supports URLs.
 Once `anim.sh` is installed on your system, simply run...
 
 ```shell
-anim.sh -s "name of the anime"
+anim.sh "name of the anime"
 ```
 ...to start watching the desired anime.
 
@@ -68,7 +68,7 @@ sudo cp anim.sh /usr/bin && sudo chmod 755 /usr/bin/anim.sh
 ## Uninstall
 
 To remove `anim.sh` from your system, simply run the following command
-**as root**:
+**_as root_**:
 
 ```shell
 rm -v /usr/bin/anim.sh
