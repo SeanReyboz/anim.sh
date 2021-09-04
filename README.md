@@ -57,12 +57,11 @@ This "program" is distributed as is, without any form of warranty.
 
 The installation process requires root privileges.
 <br>
-The instructions below assume that you have *sudo*(8) installed on your system.
+The one-liner below assume that you have *sudo*(8) and *curl*(1) installed on
+your system.
 
 ```shell
-git clone https://github.com/SeanReyboz/anim.sh
-cd anim.sh/
-sudo cp anim.sh /usr/bin && sudo chmod 755 /usr/bin/anim.sh
+curl -O https://raw.githubusercontent.com/SeanReyboz/anim.sh/main/anim.sh && sudo chmod 755 anim.sh && sudo mv anim.sh /usr/bin/
 ```
 
 ## Uninstall
