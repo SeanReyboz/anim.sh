@@ -4,7 +4,7 @@
 # Desc     - Stream anime locally
 # Author   - Sean Reyboz <seanreyboz@tuta.io>
 # Created  - 2021-08-18
-# Modified - 2021-08-26 - 21:32:13 CEST
+# Modified - 2021-09-04 - 00:41:25 CEST
 #------------------------------------------------------------------------------
 #                              --- DISCLAIMER ---
 #             THIS PROGRAM WAS CREATED FOR LEARNING PURPOSES ONLY,
@@ -219,6 +219,10 @@ getLink() {
 		sed -E -n 's/^[[:space:]]+<li class="down?loads?".* href="(.*)" target.*/\1/p')
 
 	video=$(curl -s "$link" | sed -E -n 's/.*href="(.*.mp4)".*>Download$/\1/p')
+	debug 'Video link(s)' "$video"
+
+	# Make sure there is one and only one link in the $video variable.
+	video=$(getFirstLine "$video")
 	debug 'Video link' "$video"
 
 	# if a video link exists, try to play it
@@ -295,6 +299,17 @@ urlEncodeSpaces() {
 
 	# Get rid of the trailing '%20' & display the result
 	printf '%b\n' "${toPrint%\%20}"
+}
+
+# getFirstLine()
+# Print the first line of the variable given in argument to stdout and return.
+getFirstLine() {
+	while read -r line; do
+		printf '%s\n' "$line"
+		return 0
+	done <<-EOF
+	$1
+	EOF
 }
 
 # main()
