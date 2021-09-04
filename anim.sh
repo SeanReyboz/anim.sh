@@ -222,7 +222,9 @@ getLink() {
 	debug 'Video link(s)' "$video"
 
 	# Make sure there is one and only one link in the $video variable.
-	video=$(getFirstLine "$video")
+	read -r video <<-EOF
+	$video
+	EOF
 	debug 'Video link' "$video"
 
 	# if a video link exists, try to play it
@@ -299,17 +301,6 @@ urlEncodeSpaces() {
 
 	# Get rid of the trailing '%20' & display the result
 	printf '%b\n' "${toPrint%\%20}"
-}
-
-# getFirstLine()
-# Print the first line of the variable given in argument to stdout and return.
-getFirstLine() {
-	while read -r line; do
-		printf '%s\n' "$line"
-		return 0
-	done <<-EOF
-	$1
-	EOF
 }
 
 # main()
